@@ -6,11 +6,24 @@ const ScoreBoard = ({ player }) => {
           display: "grid",
           justifyContent: "center",
           alignItems: "center",
-          fontSize : 20
+          fontSize : 20,
+          width:'400px',
         }}
       >
-        {`Puan : ${player.score}   Hareket : ${player.movement}   Ortalama : ${player.ortalama} EYP : ${player.enYuksekPuan}` }
+        {`Puan : ${player.score}   Hareket : ${player.movement}` }
       </label>
+      <label
+        style={{
+          display: "grid",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize : 20,
+          width:'400px',
+        }}
+      >
+        {`Ortalama : ${player.ortalama} EYP : ${player.enYuksekPuan}` }
+      </label>
+  
     </div>
   );
 };

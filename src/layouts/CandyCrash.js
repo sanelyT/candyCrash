@@ -209,7 +209,6 @@ export default function CandyCrash(props) {
       setCurrentColorArrangment([...currentColorArrangment]);
     }, 100);
 
-
     return () => clearInterval(timer);
   }, [
     checkForColumnOfFour,
@@ -227,41 +226,59 @@ export default function CandyCrash(props) {
       setAcilisPuani(scoreDisplay);
     } else {
       let kazanilanPuan = props.oyuncu.score - hareketOncesiPuan;
-      if (kazanilanPuan > hareketBasinaEnYuksekPuan) {     
+      if (kazanilanPuan > hareketBasinaEnYuksekPuan) {
         setHareketBasinaEnYuksekPuan(kazanilanPuan);
         props.oyuncu.enYuksekPuan = kazanilanPuan;
       }
     }
 
     if (props.oyuncu.score !== 0 && props.oyuncu.movement !== 0) {
-      props.oyuncu.ortalama = ((props.oyuncu.score- acilisPuani)/props.oyuncu.movement).toFixed(2);
+      props.oyuncu.ortalama = (
+        (props.oyuncu.score - acilisPuani) /
+        props.oyuncu.movement
+      ).toFixed(2);
       //props.oyuncu.ortalama = (props.oyuncu.score / props.oyuncu.movement)
     }
-
-  }, [scoreDisplay, movement])
-  
+  }, [scoreDisplay, movement]);
 
   return (
     <div className="app">
-      <div><ScoreBoard  player={oyuncu}/></div>
+      <div>
+        <ScoreBoard player={oyuncu} />
+      </div>
       <div className="game">
         {currentColorArrangment.map((candyColor, index) => (
-          <img
-            key={index}
-            //style={{ backgroundColor: candyColor }}
-            src={candyColor}
-            alt={candyColor}
-            data-id={index}
-            draggable={true}
-            onDragStart={dragStart}
-            onDragOver={(e) => e.preventDefault()}
-            onDragEnter={(e) => e.preventDefault()}
-            onDragLeave={(e) => e.preventDefault()}
-            onDrop={dragDrop}
-            onDragEnd={dragEnd}
-          />
+          <DraggableItem
+           /* onDragLeave={onDragLeave}
+            onDragOver={onDragOver}
+            onDragStart={onDragStart}*/
+          >
+            <img
+              key={index}
+              //style={{ backgroundColor: candyColor }}
+              src={candyColor}
+              alt={candyColor}
+              data-id={index}
+              draggable={true}
+              onDragStart={dragStart}
+              onDragOver={(e) => e.preventDefault()}
+              onDragEnter={(e) => e.preventDefault()}
+              onDragLeave={(e) => e.preventDefault()}
+              onDrop={dragDrop}
+              onDragEnd={dragEnd}
+            />
+          </DraggableItem>
         ))}
       </div>
+    </div>
+  );
+}
+
+function DraggableItem(props) {
+  const { children, ...otherProps } = props;
+  return (
+    <div className="item" draggable {...otherProps}>
+      {children}
     </div>
   );
 }
